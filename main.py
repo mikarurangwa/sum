@@ -47,4 +47,39 @@ def main():
             student_email = input("Enter student email: ")
             course_name = input("Enter course name: ")
             grade = float(input("Enter grade for the course: "))
-            grade
+            gradebook.register_student_for_course(student_email, course_name, grade)
+        elif action == "edit grade":
+            student_email = input("Enter student email: ")
+            course_name = input("Enter course name: ")
+            new_grade = float(input("Enter new grade: "))
+            success = gradebook.edit_grade(student_email, course_name, new_grade)
+            if success:
+                print("Grade updated successfully.")
+            else:
+                print("Failed to update grade. Check the student email and course name.")
+        elif action == "calculate GPA":
+            student_email = input("Enter student email: ")
+            gradebook.calculate_GPA(student_email)
+        elif action == "calculate ranking":
+            ranking = gradebook.calculate_ranking()
+            for rank, student in enumerate(ranking, 1):
+                print(f"{rank}. {student.names} - GPA: {student.GPA}")
+        elif action == "search by grade":
+            min_grade = float(input("Enter minimum grade: "))
+            max_grade = float(input("Enter maximum grade: "))
+            filtered_students = gradebook.search_by_grade(min_grade, max_grade)
+            for student in filtered_students:
+                print(f"{student.names} - GPA: {student.GPA}")
+        elif action == "generate transcript":
+            student_email = input("Enter student email: ")
+            transcript = gradebook.generate_transcript(student_email)
+            if transcript:
+                print(f"Transcript for {transcript['names']} (Email: {transcript['email']}):")
+                print(f"GPA: {transcript['GPA']}")
+                for course in transcript['courses']:
+                    print(f"Course: {course['course'].name}, Grade: {course['grade']}, Credits: {course['credits']}")
+        elif action == "exit":
+            break
+
+if __name__ == "__main__":
+    main()
