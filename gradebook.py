@@ -161,3 +161,4 @@ class GradeBook:
             if any(course['course'].name == course_name for course in student.courses_registered):
                 students_in_course.append(student)
         return students_in_course
+
