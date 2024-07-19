@@ -26,10 +26,12 @@ class GradeBook:
                         courses = parts[2:]
                         student = Student(email, names)
                         for course_info in courses:
-                            course_name, grade, credits = course_info.split('|')
-                            course = self.find_course(course_name)
-                            if course:
-                                student.register_for_course(course, float(grade))
+                            course_parts = course_info.split('|')
+                            if len(course_parts) == 3:
+                                course_name, grade, credits = course_parts
+                                course = self.find_course(course_name)
+                                if course:
+                                    student.register_for_course(course, float(grade))
                         self.student_list.append(student)
                     elif section == "courses" and line:
                         name, trimester, credits = line.split(',')
