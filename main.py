@@ -8,10 +8,11 @@ def main():
         print("1. Add Student")
         print("2. Add Course")
         print("3. Register Student for Course")
-        print("4. Calculate Ranking")
-        print("5. Search by Grade")
-        print("6. Generate Transcript")
-        print("7. Exit")
+        print("4. Register Student Grades")
+        print("5. Calculate Ranking")
+        print("6. Search by Grade")
+        print("7. Generate Transcript")
+        print("8. Exit")
 
         action = input("\nEnter your choice: ")
 
@@ -36,18 +37,26 @@ def main():
             gradebook.register_student_for_course(student_email, course_name, grade)
             print("\nStudent registered for course successfully!")
         elif action == "4":
+            print("\nRegister Student Grades")
+            student_email = input("Enter student email: ")
+            course_name = input("Enter course name: ")
+            grade = float(input("Enter grade: "))
+            credits = int(input("Enter credits earned: "))
+            gradebook.register_student_for_course(student_email, course_name, grade)
+            print("\nStudent grades registered successfully!")
+        elif action == "5":
             print("\nCalculate Ranking")
             ranking = gradebook.calculate_ranking()
             for rank, student in enumerate(ranking, 1):
                 print(f"{rank}. {student.names} - GPA: {student.GPA}")
-        elif action == "5":
+        elif action == "6":
             print("\nSearch by Grade")
             min_grade = float(input("Enter minimum grade: "))
             max_grade = float(input("Enter maximum grade: "))
             filtered_students = gradebook.search_by_grade(min_grade, max_grade)
             for student in filtered_students:
                 print(f"{student.names} - GPA: {student.GPA}")
-        elif action == "6":
+        elif action == "7":
             print("\nGenerate Transcript")
             student_email = input("Enter student email: ")
             transcript = gradebook.generate_transcript(student_email)
@@ -56,7 +65,7 @@ def main():
                 print(f"GPA: {transcript['GPA']}")
                 for course in transcript['courses']:
                     print(f"Course: {course['course'].name}, Grade: {course['grade']}, Credits: {course['credits']}")
-        elif action == "7":
+        elif action == "8":
             print("\nExiting the application. Goodbye!")
             break
         else:
