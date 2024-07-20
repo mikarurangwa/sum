@@ -3,8 +3,4 @@ class Course:
         self.name = name
         self.trimester = trimester
         self.credits = credits
-    
-    def update_info(self, new_name, new_trimester, new_credits):
-        self.name = new_name
-        self.trimester = new_trimester
-        self.credits = new_credits
+        self.grade = 0  # This will be set when registering grades for the student
