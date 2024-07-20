@@ -203,7 +203,7 @@ class GradeBook:
         student_gpas = [(student, self.calculate_gpa(student.email)) for student in self.students]
         student_gpas.sort(key=lambda x: x[1], reverse=True)
         for student, gpa in student_gpas:
-            print(f"{student.full_name} with GPA: {gpa:.2f}")
+            print(f"{student.full_name} GPA: {gpa:.2f}")
 
     def search_by_grade(self):
         min_grade = float(input("Enter minimum GPA: "))
@@ -212,7 +212,7 @@ class GradeBook:
         filtered_students = [student for student, gpa in student_gpas if min_grade <= gpa <= max_grade]
         if filtered_students:
             for student in filtered_students:
-                print(f"{student.full_name} with GPA: {self.calculate_gpa(student.email):.2f}")
+                print(f"{student.full_name} GPA: {self.calculate_gpa(student.email):.2f}")
         else:
             print("No students found within that GPA range.")
 
