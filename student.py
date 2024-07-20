@@ -4,18 +4,16 @@ class Student:
         self.names = names
         self.courses_registered = []
         self.GPA = 0.0
-    
+
+    def register_for_course(self, course):
+        self.courses_registered.append(course)
+
     def calculate_GPA(self):
-        total_credits = sum(course['credits'] for course in self.courses_registered)
-        if total_credits == 0:
-            self.GPA = 0.0
-        else:
-            total_points = sum(course['grade'] * course['credits'] for course in self.courses_registered)
-            self.GPA = total_points / total_credits
-    
-    def register_for_course(self, course, grade):
-        self.courses_registered.append({'course': course, 'grade': grade, 'credits': course.credits})
-    
-    def update_info(self, new_email, new_names):
-        self.email = new_email
-        self.names = new_names
+        if not self.courses_registered:
+            return
+        total_credits = 0
+        total_points = 0
+        for course in self.courses_registered:
+            total_credits += course.credits
+            total_points += course.grade * course.credits
+        self.GPA = total_points / total_credits
