@@ -226,12 +226,15 @@ class GradeBook:
             student = next((s for s in self.students if s.email == email), None)
             if not student:
                 print("Student not found.")
-                action = input("Press 1 to enter another email or press 2 to return to the main menu: ").strip()
-                while action not in ['1', '2']:
-                    action = input("Invalid choice. Press 1 to enter another email or press 2 to return to the main menu: ").strip()
-                    if action == '2':
-                        return
-                        continue  # If action is 1, continue the loop to prompt for email again
+                while True:
+                    action = input("Press 1 to enter another email or press 2 to return to the main menu: ").strip()
+                    if action == '1':
+                        break  # Breaks the inner loop and asks for email again
+                    elif action == '2':
+                        return  # Exits the function and goes back to the main menu
+                    else:
+                        print("Invalid choice. Please press 1 or 2.")
+                        continue  # Continues the outer loop to ask for the email again
                         print(f"Transcript for {student.full_name}:")
                         for grade in self.grades:
                             if grade[0] == email:
@@ -241,6 +244,7 @@ class GradeBook:
                                 print(f"Course: {course_name}, Grade: {grade_value}, Credits Earned: {credits_earned}")
                                 print(f"Overall GPA: {self.calculate_gpa(email):.2f}")
                                 return
+
 
 
     def display_menu(self):
