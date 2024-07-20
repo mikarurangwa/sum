@@ -23,6 +23,7 @@ class GradeBook:
         self.students = self.load_students()
         self.courses = self.load_courses()
         self.registrations = self.load_registrations()
+        self.grades = self.load_grades()
 
     def load_students(self):
         try:
@@ -45,6 +46,13 @@ class GradeBook:
         except FileNotFoundError:
             return []
 
+    def load_grades(self):
+        try:
+            with open('grades.txt', 'r') as file:
+                return [line.strip().split(';') for line in file.readlines()]
+        except FileNotFoundError:
+            return []
+
     def save_students(self):
         with open('students.txt', 'w') as file:
             for student in self.students:
@@ -59,6 +67,11 @@ class GradeBook:
         with open('registered.txt', 'w') as file:
             for registration in self.registrations:
                 file.write(f"{';'.join(registration)}\n")
+
+    def save_grades(self):
+        with open('grades.txt', 'w') as file:
+            for grade in self.grades:
+                file.write(f"{';'.join(grade)}\n")
 
     def add_student(self):
         while True:
@@ -159,8 +172,8 @@ class GradeBook:
                         if 0 <= grade <= 4:
                             credits_earned = float(input(f"Enter the credits earned (max {course.credits}): "))
                             if 0 <= credits_earned <= course.credits:
-                                registration.extend([str(grade), str(credits_earned)])
-                                self.save_registrations()
+                                self.grades.append([email, course_name, str(grade), str(credits_earned)])
+                                self.save_grades()
                                 print(f"Grade for {course_name} updated to {grade} with {credits_earned} credits earned.")
                                 return
                             else:
@@ -176,15 +189,14 @@ class GradeBook:
                         return
 
     def calculate_gpa(self, email):
-        student_registrations = [reg for reg in self.registrations if reg[0] == email]
+        student_grades = [grade for grade in self.grades if grade[0] == email]
         total_credits = 0
         total_grade_points = 0
-        for reg in student_registrations:
-            if len(reg) > 3:
-                grade = float(reg[2])
-                credits_earned = float(reg[3])
-                total_credits += credits_earned
-                total_grade_points += grade * credits_earned
+        for grade in student_grades:
+            grade_value = float(grade[2])
+            credits_earned = float(grade[3])
+            total_credits += credits_earned
+            total_grade_points += grade_value * credits_earned
         return total_grade_points / total_credits if total_credits > 0 else 0
 
     def calculate_ranking(self):
@@ -216,12 +228,12 @@ class GradeBook:
                 if action == '2':
                     return
             print(f"Transcript for {student.full_name}:")
-            for reg in self.registrations:
-                if reg[0] == email:
-                    course_name = reg[1]
-                    grade = reg[2] if len(reg) > 2 else "Not graded yet"
-                    credits_earned = reg[3] if len(reg) > 3 else "Not available"
-                    print(f"Course: {course_name}, Grade: {grade}, Credits Earned: {credits_earned}")
+            for grade in self.grades:
+                if grade[0] == email:
+                    course_name = grade[1]
+                    grade_value = grade[2]
+                    credits_earned = grade[3]
+                    print(f"Course: {course_name}, Grade: {grade_value}, Credits Earned: {credits_earned}")
             print(f"Overall GPA: {self.calculate_gpa(email):.2f}")
             return
 
