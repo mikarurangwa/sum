@@ -229,17 +229,19 @@ class GradeBook:
                 action = input("Press 1 to enter another email or press 2 to return to the main menu: ").strip()
                 while action not in ['1', '2']:
                     action = input("Invalid choice. Press 1 to enter another email or press 2 to return to the main menu: ").strip()
-                if action == '2':
-                    return
-            print(f"Transcript for {student.full_name}:")
-            for grade in self.grades:
-                if grade[0] == email:
-                    course_name = grade[1]
-                    grade_value = grade[2]
-                    credits_earned = grade[3]
-                    print(f"Course: {course_name}, Grade: {grade_value}, Credits Earned: {credits_earned}")
-            print(f"Overall GPA: {self.calculate_gpa(email):.2f}")
-            return
+                    if action == '2':
+                        return
+                        continue  # If action is 1, continue the loop to prompt for email again
+                        print(f"Transcript for {student.full_name}:")
+                        for grade in self.grades:
+                            if grade[0] == email:
+                                course_name = grade[1]
+                                grade_value = grade[2]
+                                credits_earned = grade[3]
+                                print(f"Course: {course_name}, Grade: {grade_value}, Credits Earned: {credits_earned}")
+                                print(f"Overall GPA: {self.calculate_gpa(email):.2f}")
+                                return
+
 
     def display_menu(self):
         print("\nWelcome to the Grade Book Application!")
