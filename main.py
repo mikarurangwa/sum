@@ -211,7 +211,7 @@ class GradeBook:
         student_gpas = [(student, self.calculate_gpa(student.email)) for student in self.students]
         filtered_students = [(student, gpa) for student, gpa in student_gpas if min_grade <= gpa <= max_grade]
         # Sort the filtered students by GPA in descending order
-    filtered_students.sort(key=lambda x: x[1], reverse=True)
+    student_gpas.sort(key=lambda x: x[1], reverse=True)
     if filtered_students:
         for student, gpa in filtered_students:
             print(f"{student.full_name} with GPA: {gpa:.2f}")
