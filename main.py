@@ -137,5 +137,5 @@ class GradeBook:
                 continue
             while True:
                 grade = float(input("Enter the grade (0-4): "))
-                if 0 <= grade <= 4:
+                  if 0 <= grade <= 4:
                     # Update grade in registration
