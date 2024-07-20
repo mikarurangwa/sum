@@ -1,5 +1,8 @@
 # Students
 r.mika@alustudent.com,Mika Rurangwa,
+r.mika@alustudent.com,Mika Rurangwa,
 # Courses
 Intro to Python,May 2024,40
+Intro to python,may 2024,20
+Intro to linux,May 2024,20
 # Grades
