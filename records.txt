@@ -1,4 +1,0 @@
-Students
-r.mika@alustudent.com;Mika Rurangwa;
-Courses
-Introduction to Python;May 2024;20
