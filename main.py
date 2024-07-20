@@ -143,7 +143,7 @@ class GradeBook:
                 continue
             while True:
                 course_name = input("Enter course name: ")
-                registration = next((reg for reg in self.registrations if reg == [email, course_name]), None)
+                registration = next((reg for reg in self.registrations if reg[0] == email and reg[1] == course_name), None)
                 if not registration:
                     print("Course not found or student not registered for the course.")
                     action = input("Press 1 to enter another course name or press 2 to return to the main menu: ").strip()
@@ -152,31 +152,57 @@ class GradeBook:
                     if action == '2':
                         return
                     continue
+                course = next((course for course in self.courses if course.name == course_name), None)
                 while True:
                     try:
                         grade = float(input("Enter the grade (0-4): "))
                         if 0 <= grade <= 4:
-                            registration.append(str(grade))
-                            self.save_registrations()
-                            print(f"Grade for {course_name} updated to {grade}.")
-                            return
+                            credits_earned = float(input(f"Enter the credits earned (max {course.credits}): "))
+                            if 0 <= credits_earned <= course.credits:
+                                registration.extend([str(grade), str(credits_earned)])
+                                self.save_registrations()
+                                print(f"Grade for {course_name} updated to {grade} with {credits_earned} credits earned.")
+                                return
+                            else:
+                                print(f"Invalid credits earned. Please enter a value between 0 and {course.credits}.")
                         else:
                             print("Invalid grade. Please enter a grade between 0 and 4.")
                     except ValueError:
-                        print("Invalid input. Please enter a numeric grade between 0 and 4.")
-                    action = input("Press 1 to enter the grade again or press 2 to return to the main menu: ").strip()
+                        print("Invalid input. Please enter numeric values for grade and credits earned.")
+                    action = input("Press 1 to enter the grade and credits again or press 2 to return to the main menu: ").strip()
                     while action not in ['1', '2']:
-                        action = input("Invalid choice. Press 1 to enter the grade again or press 2 to return to the main menu: ").strip()
+                        action = input("Invalid choice. Press 1 to enter the grade and credits again or press 2 to return to the main menu: ").strip()
                     if action == '2':
                         return
 
+    def calculate_gpa(self, email):
+        student_registrations = [reg for reg in self.registrations if reg[0] == email]
+        total_credits = 0
+        total_grade_points = 0
+        for reg in student_registrations:
+            if len(reg) > 3:
+                grade = float(reg[2])
+                credits_earned = float(reg[3])
+                total_credits += credits_earned
+                total_grade_points += grade * credits_earned
+        return total_grade_points / total_credits if total_credits > 0 else 0
+
     def calculate_ranking(self):
-        print("Ranking functionality is not yet implemented.")
+        student_gpas = [(student, self.calculate_gpa(student.email)) for student in self.students]
+        student_gpas.sort(key=lambda x: x[1], reverse=True)
+        for student, gpa in student_gpas:
+            print(f"{student.full_name} with GPA: {gpa:.2f}")
 
     def search_by_grade(self):
         min_grade = float(input("Enter minimum GPA: "))
         max_grade = float(input("Enter maximum GPA: "))
-        print("Search by grade functionality is not yet implemented.")
+        student_gpas = [(student, self.calculate_gpa(student.email)) for student in self.students]
+        filtered_students = [student for student, gpa in student_gpas if min_grade <= gpa <= max_grade]
+        if filtered_students:
+            for student in filtered_students:
+                print(f"{student.full_name} with GPA: {self.calculate_gpa(student.email):.2f}")
+        else:
+            print("No students found within that GPA range.")
 
     def generate_transcript(self):
         while True:
@@ -194,8 +220,9 @@ class GradeBook:
                 if reg[0] == email:
                     course_name = reg[1]
                     grade = reg[2] if len(reg) > 2 else "Not graded yet"
-                    print(f"Course: {course_name}, Grade: {grade}")
-            print("GPA calculation functionality not yet implemented.")
+                    credits_earned = reg[3] if len(reg) > 3 else "Not available"
+                    print(f"Course: {course_name}, Grade: {grade}, Credits Earned: {credits_earned}")
+            print(f"Overall GPA: {self.calculate_gpa(email):.2f}")
             return
 
     def display_menu(self):
