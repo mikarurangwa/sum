@@ -1,0 +1,1 @@
+r.mika@alustudent.com;Introduction to Python;3.8;19.0
