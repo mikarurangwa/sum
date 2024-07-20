@@ -66,6 +66,8 @@ class GradeBook:
             if any(student.email == email for student in self.students):
                 print("Student already added.")
                 action = input("Press 1 to enter another email or press 2 to return to the main menu: ").strip()
+                while action not in ['1', '2']:
+                    action = input("Invalid choice. Press 1 to enter another email or press 2 to return to the main menu: ").strip()
                 if action == '2':
                     return
                 continue
@@ -83,6 +85,8 @@ class GradeBook:
             if any(course.name == name for course in self.courses):
                 print("Course already added.")
                 action = input("Press 1 to enter another course or press 2 to return to the main menu: ").strip()
+                while action not in ['1', '2']:
+                    action = input("Invalid choice. Press 1 to enter another course or press 2 to return to the main menu: ").strip()
                 if action == '2':
                     return
                 continue
@@ -101,6 +105,8 @@ class GradeBook:
             if not student:
                 print("Student not found.")
                 action = input("Press 1 to enter another email or press 2 to return to the main menu: ").strip()
+                while action not in ['1', '2']:
+                    action = input("Invalid choice. Press 1 to enter another email or press 2 to return to the main menu: ").strip()
                 if action == '2':
                     return
                 continue
@@ -110,6 +116,8 @@ class GradeBook:
                 if not course:
                     print("Course not found.")
                     action = input("Press 1 to enter another course name or press 2 to return to the main menu: ").strip()
+                    while action not in ['1', '2']:
+                        action = input("Invalid choice. Press 1 to enter another course name or press 2 to return to the main menu: ").strip()
                     if action == '2':
                         return
                     continue
@@ -128,32 +136,39 @@ class GradeBook:
             if not student:
                 print("Student not found.")
                 action = input("Press 1 to enter another email or press 2 to return to the main menu: ").strip()
+                while action not in ['1', '2']:
+                    action = input("Invalid choice. Press 1 to enter another email or press 2 to return to the main menu: ").strip()
                 if action == '2':
                     return
                 continue
             while True:
                 course_name = input("Enter course name: ")
-                if not any([email, course_name] in reg for reg in self.registrations):
+                registration = next((reg for reg in self.registrations if reg == [email, course_name]), None)
+                if not registration:
                     print("Course not found or student not registered for the course.")
                     action = input("Press 1 to enter another course name or press 2 to return to the main menu: ").strip()
+                    while action not in ['1', '2']:
+                        action = input("Invalid choice. Press 1 to enter another course name or press 2 to return to the main menu: ").strip()
                     if action == '2':
                         return
                     continue
                 while True:
-                    grade = float(input("Enter the grade (0-4): "))
-                    if 0 <= grade <= 4:
-                        # Update grade in registrations
-                        for reg in self.registrations:
-                            if reg == [email, course_name]:
-                                reg.append(str(grade))
-                                self.save_registrations()
-                                print(f"Grade for {course_name} updated to {grade}.")
-                                return
-                    else:
-                        print("Invalid grade. Please enter a grade between 0 and 4.")
-                        action = input("Press 1 to enter the grade again or press 2 to return to the main menu: ").strip()
-                        if action == '2':
+                    try:
+                        grade = float(input("Enter the grade (0-4): "))
+                        if 0 <= grade <= 4:
+                            registration.append(str(grade))
+                            self.save_registrations()
+                            print(f"Grade for {course_name} updated to {grade}.")
                             return
+                        else:
+                            print("Invalid grade. Please enter a grade between 0 and 4.")
+                    except ValueError:
+                        print("Invalid input. Please enter a numeric grade between 0 and 4.")
+                    action = input("Press 1 to enter the grade again or press 2 to return to the main menu: ").strip()
+                    while action not in ['1', '2']:
+                        action = input("Invalid choice. Press 1 to enter the grade again or press 2 to return to the main menu: ").strip()
+                    if action == '2':
+                        return
 
     def calculate_ranking(self):
         print("Ranking functionality is not yet implemented.")
@@ -170,6 +185,8 @@ class GradeBook:
             if not student:
                 print("Student not found.")
                 action = input("Press 1 to enter another email or press 2 to return to the main menu: ").strip()
+                while action not in ['1', '2']:
+                    action = input("Invalid choice. Press 1 to enter another email or press 2 to return to the main menu: ").strip()
                 if action == '2':
                     return
             print(f"Transcript for {student.full_name}:")
@@ -220,3 +237,4 @@ class GradeBook:
 if __name__ == "__main__":
     grade_book = GradeBook()
     grade_book.main_loop()
+
