@@ -240,10 +240,12 @@ class GradeBook:
         for grade in self.grades:
             if grade[0] == email:
                 course_name = grade[1]
+                grade_value = grade[2]
                 credits_earned = grade[3]
-                print(f"Course: {course_name}, Credits Earned: {credits_earned}")
+                print(f"Course: {course_name}, Grade: {grade_value}, Credits Earned: {credits_earned}")
                 print(f"Overall GPA: {self.calculate_gpa(email):.2f}")
                 return  # Exit the function after printing the transcript
+
 
 
 
