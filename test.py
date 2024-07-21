@@ -235,14 +235,15 @@ class GradeBook:
                     else:
                         print("Invalid choice. Please press 1 or 2.")
                         continue  # Continues the outer loop to ask for the email again
-                        print(f"Transcript for {student.full_name}:")
-                        for grade in self.grades:
-                            if grade[0] == email:
-                                course_name = grade[1]
-                                credits_earned = grade[3]
-                                print(f"Course: {course_name}, Credits Earned: {credits_earned}")
-                                print(f"Overall GPA: {self.calculate_gpa(email):.2f}")
-                                return
+                        # If the student is found, print the transcript details
+        print(f"Transcript for {student.full_name}:")
+        for grade in self.grades:
+            if grade[0] == email:
+                course_name = grade[1]
+                credits_earned = grade[3]
+                print(f"Course: {course_name}, Credits Earned: {credits_earned}")
+                print(f"Overall GPA: {self.calculate_gpa(email):.2f}")
+                return  # Exit the function after printing the transcript
 
 
 
