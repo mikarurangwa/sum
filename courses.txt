@@ -1,1 +1,3 @@
 Introduction to Python;May 2024;20
+intro;May 2024;20
+introd;May 2024;50

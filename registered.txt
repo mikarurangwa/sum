@@ -1,1 +1,3 @@
 r.mika@alustudent.com;Introduction to Python;3.5;3.5;19.0
+rm@gmail.com;intro
+rm@gmail.com;introd

@@ -1,3 +1,4 @@
 r.mika@alustudent.com;Mika;Rurangwa
 menu;m;m,
 2;2;2
+rm@gmail.com;Mika;Rurangwa
