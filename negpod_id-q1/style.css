@@ -1,0 +1,92 @@
+/* General body styling */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
+    margin: 0;
+    padding: 0;
+    background-color: #f5f7fa; /* Light grayish background for a soft look */
+    color: #333; /* Dark gray text for better readability */
+}
+
+/* Header styling */
+header {
+    background-color: #004d40; /* Teal background for a professional look */
+    color: #fff; /* White text color for contrast */
+    padding: 20px 0;
+    text-align: center;
+    font-size: 1.5rem; /* Slightly larger font size */
+}
+
+/* Content wrapper for header */
+.header-content {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Main container for columns */
+.container {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 40px auto; /* Centered with top/bottom margin */
+    padding: 0 20px;
+}
+
+/* Left and right column settings */
+.left-column, .right-column {
+    width: 45%;
+}
+
+/* Box styling for sections */
+.box {
+    background-color: #fff; /* White background for clean look */
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 12px; /* More rounded corners for modern feel */
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.1); /* Deeper shadow for subtle depth */
+    border-left: 5px solid #004d40; /* Teal accent on the left border of each box */
+}
+
+/* Title styling */
+h2 {
+    margin-top: 0;
+    color: #004d40; /* Teal for headings */
+    font-weight: 600; /* Slightly bolder font for headings */
+}
+
+/* Horizontal rule (line) styling */
+hr {
+    border: none;
+    border-top: 2px solid #80cbc4; /* Softer teal line for separation */
+    margin: 10px 0;
+}
+
+/* Unordered list (bullet points) styling */
+ul {
+    list-style-type: disc; /* Disc-style bullet points */
+    margin-left: 20px;
+}
+
+ul li {
+    margin-bottom: 10px; /* Space between list items */
+    color: #333; /* Dark gray text color for list items */
+}
+
+/* Footer styling */
+footer {
+    background-color: #004d40; /* Teal footer background */
+    color: #fff; /* White text for contrast */
+    text-align: center;
+    padding: 20px; /* Padding inside the footer */
+    font-size: 1rem;
+}
+
+/* Responsive design for smaller screens */
+@media screen and (max-width: 768px) {
+    .container {
+        flex-direction: column; /* Stack columns vertically */
+    }
+
+    .left-column, .right-column {
+        width: 100%; /* Full-width columns on small screens */
+    }
+}
